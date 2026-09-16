@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دعوت‌نامه</title>
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    min-height:100vh;
+    background:#e9e3e6;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px 12px;
+    font-family:sans-serif;
+  }
+  .frame{
+    position:relative;
+    width:100%;
+    max-width:520px;
+  }
+  .frame img{
+    display:block;
+    width:100%;
+    height:auto;
+    border-radius:6px;
+    box-shadow:0 24px 50px -20px rgba(60,30,55,0.45);
+  }
+  .sound-btn{
+    position:absolute;
+    bottom:14px;
+    left:14px;
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.92);
+    border:1px solid rgba(122,74,114,0.35);
+    box-shadow:0 6px 16px -6px rgba(60,30,55,0.5);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    font-size:19px;
+    line-height:1;
+    user-select:none;
+  }
+  .notfound{
+    text-align:center;
+    color:#7a5c76;
+    font-family:sans-serif;
+    padding:40px 20px;
+  }
+</style>
+</head>
+<body>
+
+<div class="frame" id="frame">
+  <img id="cardImg" src="card1.jpg" alt="دعوت‌نامه">
+  <div class="sound-btn" id="soundBtn">🔈</div>
+</div>
+
+<audio id="bgMusic" src="song.mp3" loop preload="auto"></audio>
+
+<script>
+  // شماره‌ی کارت از روی لینک، مثال: ?card=3  (پیش‌فرض: 1)
+  const params = new URLSearchParams(window.location.search);
+  let cardNum = parseInt(params.get('card'), 10);
+  if (!cardNum || cardNum < 1 || cardNum > 10) cardNum = 1;
+  document.getElementById('cardImg').src = 'card' + cardNum + '.jpg';
+
+  // اگر عکس پیدا نشد، پیام بده به‌جای صفحه‌ی خالی
+  document.getElementById('cardImg').addEventListener('error', function(){
+    document.getElementById('frame').innerHTML =
+      '<div class="notfound">کارت پیدا نشد. لینک را بررسی کنید.</div>';
+  });
+
+  // پخش موزیک با لمس دکمه (مرورگرها پخش خودکار صدادار را مسدود می‌کنند)
+  const audio = document.getElementById('bgMusic');
+  const btn = document.getElementById('soundBtn');
+  let playing = false;
+
+  function toggleSound(){
+    if (!playing) {
+      audio.play().then(() => { playing = true; btn.textContent = '🔊'; }).catch(() => {});
+    } else {
+      audio.pause();
+      playing = false;
+      btn.textContent = '🔈';
+    }
+  }
+  btn.addEventListener('click', toggleSound);
+  audio.play().then(() => { playing = true; btn.textContent = '🔊'; }).catch(() => {});
+</script>
+
+</body>
+</html>
