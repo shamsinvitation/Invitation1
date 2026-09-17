@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دعوت‌نامه — فرشته کارکری</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(160deg, #efe6ee 0%, #f7f2f6 50%, #eee5ec 100%);
+    font-family: Tahoma, "Vazirmatn", sans-serif;
+    padding: 24px 12px;
+  }
+  .card {
+    max-width: 480px;
+    width: 100%;
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(90, 50, 80, 0.18);
+  }
+  .card img {
+    width: 100%;
+    display: block;
+  }
+  .controls {
+    display: flex;
+    justify-content: center;
+    padding: 14px 10px 18px;
+  }
+  button {
+    border: none;
+    border-radius: 999px;
+    padding: 10px 22px;
+    font-size: 15px;
+    background: #8e5a82;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(142,90,130,0.35);
+  }
+  button:active { transform: scale(0.97); }
+  .hint {
+    text-align: center;
+    color: #8a7a86;
+    font-size: 12px;
+    padding-bottom: 10px;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <img src="card133.jpg" alt="دعوت‌نامه فرشته کارکری">
+    <div class="controls">
+      <button id="playBtn" onclick="toggleMusic()">پخش موسیقی 🎵</button>
+    </div>
+    <div class="hint" id="hint"></div>
+  </div>
+
+  <audio id="bgm" src="song.mp3" loop preload="auto"></audio>
+
+  <script>
+    const audio = document.getElementById('bgm');
+    const btn = document.getElementById('playBtn');
+    const hint = document.getElementById('hint');
+    let playing = false;
+
+    function setBtn() {
+      btn.textContent = playing ? 'توقف موسیقی ⏸' : 'پخش موسیقی 🎵';
+    }
+
+    function toggleMusic() {
+      if (playing) {
+        audio.pause();
+        playing = false;
+      } else {
+        audio.play().then(() => { playing = true; setBtn(); }).catch(() => {
+          hint.textContent = 'برای پخش موسیقی دوباره روی دکمه بزنید.';
+        });
+        return;
+      }
+      setBtn();
+    }
+
+    window.addEventListener('load', () => {
+      audio.play().then(() => { playing = true; setBtn(); }).catch(() => {
+        setBtn();
+      });
+    });
+  </script>
+</body>
+</html>
