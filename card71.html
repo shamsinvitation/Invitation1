@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دعوت‌نامه</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: #ece3ea;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Tahoma, sans-serif;
+  }
+  .card-wrap {
+    max-width: 700px;
+    width: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+  }
+  .card-wrap img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  }
+  #soundBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #8e5b8e;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 18px;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    z-index: 10;
+  }
+</style>
+</head>
+<body>
+  <div class="card-wrap">
+    <img src="71.jpg" alt="کارت دعوت">
+  </div>
+  <button id="soundBtn" onclick="toggleSound()">🔈 پخش موسیقی</button>
+  <audio id="bgMusic" src="song.mp3" loop></audio>
+  <script>
+    const audio = document.getElementById("bgMusic");
+    const btn = document.getElementById("soundBtn");
+    let playing = false;
+    function toggleSound() {
+      if (!playing) {
+        audio.play();
+        btn.textContent = "🔊 توقف موسیقی";
+      } else {
+        audio.pause();
+        btn.textContent = "🔈 پخش موسیقی";
+      }
+      playing = !playing;
+    }
+    audio.play().then(() => {
+      playing = true;
+      btn.textContent = "🔊 توقف موسیقی";
+    }).catch(() => {});
+  </script>
+</body>
+</html>
